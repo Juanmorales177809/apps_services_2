@@ -1,0 +1,202 @@
+[
+  {
+    "id": "20241001",
+    "nombre_completo": "Valentina Gómez",
+    "programa": "Ingeniería de Sistemas",
+    "semestre": 5,
+    "promedio": 4.2,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241002",
+    "nombre_completo": "Juan Pérez",
+    "programa": "Ingeniería de Sistemas",
+    "semestre": 3,
+    "promedio": 3.8,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241003",
+    "nombre_completo": "Mariana López",
+    "programa": "Diseño Industrial",
+    "semestre": 2,
+    "promedio": 4.5,
+    "estado": "Inactivo"
+  },
+  {
+    "id": "20241004",
+    "nombre_completo": "Andrés Rodríguez",
+    "programa": "Administración",
+    "semestre": 6,
+    "promedio": 3.1,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241005",
+    "nombre_completo": "Sofía Martínez",
+    "programa": "Ingeniería de Sistemas",
+    "semestre": 1,
+    "promedio": 4.7,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241006",
+    "nombre_completo": "Camilo Hernández",
+    "programa": "Ingeniería Electrónica",
+    "semestre": 4,
+    "promedio": 4.0,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241007",
+    "nombre_completo": "Isabella Ramírez",
+    "programa": "Arquitectura",
+    "semestre": 3,
+    "promedio": 4.3,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241008",
+    "nombre_completo": "Santiago Torres",
+    "programa": "Contaduría Pública",
+    "semestre": 7,
+    "promedio": 3.6,
+    "estado": "Inactivo"
+  },
+  {
+    "id": "20241009",
+    "nombre_completo": "Luciana Moreno",
+    "programa": "Psicología",
+    "semestre": 2,
+    "promedio": 4.6,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241010",
+    "nombre_completo": "Mateo Castro",
+    "programa": "Ingeniería Mecánica",
+    "semestre": 8,
+    "promedio": 3.9,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241011",
+    "nombre_completo": "Emma Vargas",
+    "programa": "Comunicación Social",
+    "semestre": 5,
+    "promedio": 4.1,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241012",
+    "nombre_completo": "Nicolás Rojas",
+    "programa": "Ingeniería Industrial",
+    "semestre": 6,
+    "promedio": 3.4,
+    "estado": "Inactivo"
+  },
+  {
+    "id": "20241013",
+    "nombre_completo": "Salomé Jiménez",
+    "programa": "Derecho",
+    "semestre": 4,
+    "promedio": 4.4,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241014",
+    "nombre_completo": "Samuel Ortiz",
+    "programa": "Economía",
+    "semestre": 1,
+    "promedio": 3.7,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241015",
+    "nombre_completo": "Antonella Gutiérrez",
+    "programa": "Diseño Gráfico",
+    "semestre": 3,
+    "promedio": 4.8,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241016",
+    "nombre_completo": "Daniel Álvarez",
+    "programa": "Ingeniería Civil",
+    "semestre": 9,
+    "promedio": 3.5,
+    "estado": "Inactivo"
+  },
+  {
+    "id": "20241017",
+    "nombre_completo": "Manuela Ruiz",
+    "programa": "Trabajo Social",
+    "semestre": 5,
+    "promedio": 4.0,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241018",
+    "nombre_completo": "Emiliano Díaz",
+    "programa": "Ingeniería de Software",
+    "semestre": 2,
+    "promedio": 4.2,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241019",
+    "nombre_completo": "Gabriela Mendoza",
+    "programa": "Negocios Internacionales",
+    "semestre": 7,
+    "promedio": 3.9,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241020",
+    "nombre_completo": "Martín Guerrero",
+    "programa": "Matemáticas",
+    "semestre": 6,
+    "promedio": 4.6,
+    "estado": "Inactivo"
+  },
+  {
+    "id": "20241021",
+    "nombre_completo": "Julieta Navarro",
+    "programa": "Biología",
+    "semestre": 4,
+    "promedio": 4.3,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241022",
+    "nombre_completo": "Thiago Cárdenas",
+    "programa": "Ingeniería Ambiental",
+    "semestre": 8,
+    "promedio": 3.8,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241023",
+    "nombre_completo": "Renata Molina",
+    "programa": "Publicidad",
+    "semestre": 2,
+    "promedio": 4.5,
+    "estado": "Activo"
+  },
+  {
+    "id": "20241024",
+    "nombre_completo": "Jerónimo Suárez",
+    "programa": "Ciencia Política",
+    "semestre": 5,
+    "promedio": 3.3,
+    "estado": "Inactivo"
+  },
+  {
+    "id": "20241025",
+    "nombre_completo": "Victoria Restrepo",
+    "programa": "Medicina",
+    "semestre": 3,
+    "promedio": 4.9,
+    "estado": "Activo"
+  }
+]

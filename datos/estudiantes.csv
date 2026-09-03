@@ -1,0 +1,26 @@
+codigo,nombre,apellido,programa,semestre,promedio,activo,correo
+20241001,Valentina,Gómez,Ingeniería de Sistemas,5,4.2,true,valentina.gomez@correo.edu.co
+20241002,Juan,Pérez,Ingeniería de Sistemas,3,3.8,true,juan.perez@correo.edu.co
+20241003,Mariana,López,Diseño Industrial,2,4.5,false,mariana.lopez@correo.edu.co
+20241004,Andrés,Rodríguez,Administración,6,3.1,true,andres.rodriguez@correo.edu.co
+20241005,Sofía,Martínez,Ingeniería de Sistemas,1,4.7,true,sofia.martinez@correo.edu.co
+20241006,Camilo,Hernández,Ingeniería Electrónica,4,4.0,true,camilo.hernandez@correo.edu.co
+20241007,Isabella,Ramírez,Arquitectura,3,4.3,true,isabella.ramirez@correo.edu.co
+20241008,Santiago,Torres,Contaduría Pública,7,3.6,false,santiago.torres@correo.edu.co
+20241009,Luciana,Moreno,Psicología,2,4.6,true,luciana.moreno@correo.edu.co
+20241010,Mateo,Castro,Ingeniería Mecánica,8,3.9,true,mateo.castro@correo.edu.co
+20241011,Emma,Vargas,Comunicación Social,5,4.1,true,emma.vargas@correo.edu.co
+20241012,Nicolás,Rojas,Ingeniería Industrial,6,3.4,false,nicolas.rojas@correo.edu.co
+20241013,Salomé,Jiménez,Derecho,4,4.4,true,salome.jimenez@correo.edu.co
+20241014,Samuel,Ortiz,Economía,1,3.7,true,samuel.ortiz@correo.edu.co
+20241015,Antonella,Gutiérrez,Diseño Gráfico,3,4.8,true,antonella.gutierrez@correo.edu.co
+20241016,Daniel,Álvarez,Ingeniería Civil,9,3.5,false,daniel.alvarez@correo.edu.co
+20241017,Manuela,Ruiz,Trabajo Social,5,4.0,true,manuela.ruiz@correo.edu.co
+20241018,Emiliano,Díaz,Ingeniería de Software,2,4.2,true,emiliano.diaz@correo.edu.co
+20241019,Gabriela,Mendoza,Negocios Internacionales,7,3.9,true,gabriela.mendoza@correo.edu.co
+20241020,Martín,Guerrero,Matemáticas,6,4.6,false,martin.guerrero@correo.edu.co
+20241021,Julieta,Navarro,Biología,4,4.3,true,julieta.navarro@correo.edu.co
+20241022,Thiago,Cárdenas,Ingeniería Ambiental,8,3.8,true,thiago.cardenas@correo.edu.co
+20241023,Renata,Molina,Publicidad,2,4.5,true,renata.molina@correo.edu.co
+20241024,Jerónimo,Suárez,Ciencia Política,5,3.3,false,jeronimo.suarez@correo.edu.co
+20241025,Victoria,Restrepo,Medicina,3,4.9,true,victoria.restrepo@correo.edu.co
