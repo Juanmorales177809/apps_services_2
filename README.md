@@ -1,112 +1,90 @@
-# Clase 5 - FASTAPI
+# Clase 6 - FASTAPI
 
 ## Objetivo de la clase
 
-Comprender los conceptos fundamentales de FastAPI y crear el primer servicio web en Python, implementando una consulta GET, ejecutándola con Uvicorn y probándola desde Swagger UI.
+Construir una API para gestionar estudiantes utilizando FastAPI y Pydantic. Se implementarán las operaciones HTTP fundamentales para crear, consultar, actualizar y eliminar datos almacenados temporalmente en memoria.
 
 ## Generalidades de FastAPI
 
-FastAPI es un framework moderno para construir APIs web con Python. Está basado en Starlette para las funcionalidades web y en Pydantic para la validación y serialización de datos.
+FastAPI es un framework moderno de Python para construir APIs web. Permite definir rutas con decoradores, validar automáticamente los datos recibidos y generar documentación interactiva con OpenAPI y Swagger UI.
 
-Sus principales características son:
-
-- Alto rendimiento y soporte para programación asíncrona.
-- Validación automática de datos mediante tipos de Python.
-- Generación automática de la especificación OpenAPI.
-- Documentación interactiva con Swagger UI y ReDoc.
-- Sintaxis clara y compatible con los estándares actuales de desarrollo de APIs.
-
-### ¿Por qué FastAPI?
-
-FastAPI permite desarrollar APIs rápidamente, con poco código y con validación integrada. Además, la documentación se genera automáticamente a partir de las rutas y los modelos definidos en la aplicación, lo que facilita las pruebas y el consumo del servicio por otros desarrolladores.
-
-## Historia de FastAPI
-
-Como complemento a la clase, consulte el siguiente video sobre la historia y evolución de FastAPI:
+Como complemento sobre la historia y evolución de FastAPI, consulte el siguiente video:
 
 [Historia de FastAPI](https://www.youtube.com/watch?v=mpR8ngthqiE)
 
-## ¿Cómo funciona FastAPI?
+## Modelo de datos con Pydantic
 
-Una aplicación FastAPI se construye creando una instancia de `FastAPI` y definiendo rutas mediante decoradores, como `@app.get()`, `@app.post()` o `@app.put()`.
-
-Cuando un cliente realiza una petición HTTP, FastAPI identifica la ruta y el método correspondiente, ejecuta la función asociada y convierte su resultado a una respuesta HTTP, normalmente en formato JSON.
-
-En este proyecto, la aplicación se encuentra en `main.py`:
+El proyecto utiliza un modelo Pydantic para validar la información de cada estudiante:
 
 ```python
-from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.get("/")
-def read_root():
-    return {"message": "Hola mundo"}
+class Estudiante(BaseModel):
+    nombre: str
+    edad: int
+    programa: str
 ```
 
-La expresión `@app.get("/")` indica que la función `read_root` atenderá peticiones GET realizadas sobre la ruta raíz `/`.
+Cada estudiante debe tener un nombre de texto, una edad numérica y el nombre de un programa académico.
 
-## Instalación en un entorno virtual
+Los estudiantes se guardan en la variable `dataset_estudiantes`, que es una lista principal. Cada estudiante se representa como una lista secundaria:
 
-Desde la carpeta del proyecto, cree y active un entorno virtual:
-
-### Windows
-
-```bash
-python -m venv venv
-venv\Scripts\activate
+```python
+dataset_estudiantes = [
+    ["Ana Gómez", 20, "Ingeniería de Sistemas"],
+    ["Carlos Pérez", 22, "Diseño Industrial"]
+]
 ```
 
-### Linux o macOS
+Esta información se almacena únicamente en memoria. Por lo tanto, se pierde cuando se detiene o reinicia el servidor.
+
+## Iniciar el servidor
+
+Active el entorno virtual e instale las dependencias:
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-```
-
-Después, instale las dependencias:
-
-```bash
 pip install -r requirements.txt
 ```
 
-El archivo `requirements.txt` incluye FastAPI y Uvicorn. La carpeta `venv/` está incluida en `.gitignore`, por lo que no se subirá al repositorio.
+En Windows puede utilizar:
 
-## Desplegar el primer servidor con Uvicorn
+```bash
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-Uvicorn es el servidor ASGI que ejecuta la aplicación FastAPI. Inicie el servidor con:
+Ejecute la aplicación con Uvicorn:
 
 ```bash
 uvicorn main:app --reload
 ```
 
-En este comando, `main` corresponde a `main.py`, `app` a la instancia `app = FastAPI()` y `--reload` reinicia automáticamente el servidor cuando detecta cambios.
+El servidor quedará disponible en `http://127.0.0.1:8000`.
 
-El servidor estará disponible en:
+## Documentación Swagger
 
-```text
-http://127.0.0.1:8000
-```
-
-Para detenerlo, presione `Ctrl + C`.
-
-## Ingresar a Swagger UI y ejecutar la primera consulta
-
-FastAPI genera automáticamente una interfaz de documentación interactiva con Swagger UI. Para acceder a ella, abra:
+FastAPI genera automáticamente la documentación interactiva en:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-Para ejecutar el GET de ejemplo:
+Para probar una operación:
 
-1. Ubique la operación `GET /`.
-2. Haga clic sobre la operación para expandirla.
-3. Seleccione **Try it out**.
+1. Seleccione la operación que desea ejecutar.
+2. Haga clic en **Try it out**.
+3. Escriba los datos solicitados.
 4. Haga clic en **Execute**.
-5. Revise la respuesta en **Response body**.
+5. Revise el código y el cuerpo de la respuesta.
 
-La respuesta esperada es:
+## Peticiones de la API
+
+### GET `/`
+
+Esta es la ruta inicial de la aplicación. Sirve para comprobar que el servidor está funcionando.
+
+Respuesta:
 
 ```json
 {
@@ -114,14 +92,136 @@ La respuesta esperada es:
 }
 ```
 
-La consulta también puede realizarse desde el navegador en `http://127.0.0.1:8000/` o mediante `curl`:
+### POST `/estudiantes`
 
-```bash
-curl http://127.0.0.1:8000/
+Agrega un nuevo estudiante al dataset. El cuerpo de la petición debe incluir todos los campos definidos en el modelo `Estudiante`.
+
+Ejemplo de solicitud:
+
+```json
+{
+  "nombre": "Ana Gómez",
+  "edad": 20,
+  "programa": "Ingeniería de Sistemas"
+}
 ```
 
-La documentación alternativa con ReDoc está disponible en:
+Internamente, el estudiante se convierte en una lista y se agrega al dataset:
 
 ```text
-http://127.0.0.1:8000/redoc
+["Ana Gómez", 20, "Ingeniería de Sistemas"]
 ```
+
+Respuesta esperada:
+
+```json
+{
+  "message": "Estudiante agregado correctamente",
+  "estudiante": ["Ana Gómez", 20, "Ingeniería de Sistemas"],
+  "dataset": [
+    ["Ana Gómez", 20, "Ingeniería de Sistemas"]
+  ]
+}
+```
+
+Cada vez que se ejecuta el POST, el dataset completo también se imprime en la consola del servidor.
+
+### PUT `/estudiantes/{indice}`
+
+Reemplaza completamente un estudiante existente. El parámetro `indice` indica la posición del estudiante dentro del dataset. El primer estudiante tiene índice `0`, el segundo índice `1`, y así sucesivamente.
+
+Ejemplo para reemplazar el primer estudiante:
+
+```text
+PUT /estudiantes/0
+```
+
+Cuerpo de la solicitud:
+
+```json
+{
+  "nombre": "Ana Rodríguez",
+  "edad": 21,
+  "programa": "Ingeniería de Software"
+}
+```
+
+El PUT exige los tres campos y reemplaza completamente la lista que se encuentra en la posición indicada.
+
+### PATCH `/estudiantes/{indice}`
+
+Actualiza parcialmente un estudiante. A diferencia de PUT, solo es necesario enviar los campos que se desean modificar.
+
+Ejemplo para cambiar únicamente el programa del primer estudiante:
+
+```text
+PATCH /estudiantes/0
+```
+
+Cuerpo de la solicitud:
+
+```json
+{
+  "programa": "Ingeniería de Datos"
+}
+```
+
+También se pueden actualizar varios campos:
+
+```json
+{
+  "nombre": "Ana Rodríguez",
+  "edad": 22
+}
+```
+
+Los campos no enviados conservan su valor original. Este comportamiento se logra con el modelo `EstudianteActualizacion` y `exclude_unset=True`.
+
+### DELETE `/estudiantes/{indice}`
+
+Elimina el estudiante ubicado en la posición indicada.
+
+Ejemplo para eliminar el primer estudiante:
+
+```text
+DELETE /estudiantes/0
+```
+
+La lista se elimina del dataset y los estudiantes que estaban después de ella ocupan una nueva posición.
+
+## Validación y errores
+
+Pydantic valida automáticamente los datos recibidos. Por ejemplo, `edad` debe ser un número entero y los campos de texto deben enviarse como cadenas.
+
+Si se utiliza un índice que no existe, la API responde:
+
+```json
+{
+  "error": "El estudiante no existe"
+}
+```
+
+Después de cada POST, PUT, PATCH o DELETE, el contenido actualizado del dataset se imprime en la consola del servidor.
+
+## Resumen de operaciones
+
+| Método | Ruta | Función |
+|---|---|---|
+| GET | `/` | Verificar que el servidor funciona |
+| POST | `/estudiantes` | Agregar un estudiante |
+| PUT | `/estudiantes/{indice}` | Reemplazar todos los datos |
+| PATCH | `/estudiantes/{indice}` | Actualizar algunos datos |
+| DELETE | `/estudiantes/{indice}` | Eliminar un estudiante |
+
+## Actividad propuesta
+
+Amplíe la API para consultar un estudiante por su identificador.
+
+1. Agregue el campo `id` al modelo `Estudiante`.
+2. Modifique la estructura del dataset para guardar el identificador de cada estudiante.
+3. Cree una operación `GET /estudiantes/{id}` que busque y retorne únicamente el estudiante solicitado.
+4. Pruebe la operación desde Swagger UI con estudiantes existentes y con un ID que no exista.
+5. Documente el nuevo endpoint en el README.
+6. Publique los cambios en su repositorio de la clase.
+
+La respuesta para un ID existente debe incluir los datos del estudiante. Para un ID inexistente, la API debe responder un mensaje indicando que el estudiante no fue encontrado.
