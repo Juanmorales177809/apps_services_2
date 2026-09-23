@@ -1,324 +1,127 @@
-# Taller 1 — Integración de datos entre aplicaciones
+# Clase 5 - FASTAPI
 
-## Propósito
+## Objetivo de la clase
 
-Construir en Python un cliente integrador capaz de leer datos provenientes de distintas fuentes, adaptarlos a un contrato institucional, validarlos y comunicarse con una API mediante HTTP.
+Comprender los conceptos fundamentales de FastAPI y crear el primer servicio web en Python, implementando una consulta GET, ejecutándola con Uvicorn y probándola desde Swagger UI.
 
-La API será suministrada y desplegada por el docente. El objetivo del taller no es desarrollar la API, sino construir correctamente el cliente que se integra con ella.
+## Generalidades de FastAPI
 
-## Escenario
+FastAPI es un framework moderno para construir APIs web con Python. Está basado en Starlette para las funcionalidades web y en Pydantic para la validación y serialización de datos.
 
-Una universidad recibe información meteorológica proveniente de diferentes proveedores. Cada proveedor representa los datos de forma distinta y puede contener registros incompletos o inválidos.
+Sus principales características son:
 
-El equipo debe desarrollar una aplicación que:
+- Alto rendimiento y soporte para programación asíncrona.
+- Validación automática de datos mediante tipos de Python.
+- Generación automática de la especificación OpenAPI.
+- Documentación interactiva con Swagger UI y ReDoc.
+- Sintaxis clara y compatible con los estándares actuales de desarrollo de APIs.
 
-1. lea los datasets suministrados;
-2. analice las diferencias entre sus estructuras;
-3. transforme cada registro al contrato institucional;
-4. valide localmente los datos;
-5. registre mediante HTTP las mediciones válidas;
-6. interprete las respuestas del servidor;
-7. consulte posteriormente qué registros fueron almacenados;
-8. genere evidencias del proceso de integración.
+### ¿Por qué FastAPI?
 
-## Material suministrado
+FastAPI permite desarrollar APIs rápidamente, con poco código y con validación integrada. Además, la documentación se genera automáticamente a partir de las rutas y los modelos definidos en la aplicación, lo que facilita las pruebas y el consumo del servicio por otros desarrolladores.
 
-```text
-taller_1/
-├── datos/
-│   ├── proveedor_a.json
-│   └── proveedor_b.csv
-├── CONTRATO_API.md
-├── requirements.txt
-└── README.md
+## Historia de FastAPI
+
+Como complemento a la clase, consulte el siguiente video sobre la historia y evolución de FastAPI:
+
+[Historia de FastAPI](https://www.youtube.com/watch?v=mpR8ngthqiE)
+
+## ¿Cómo funciona FastAPI?
+
+Una aplicación FastAPI se construye creando una instancia de `FastAPI` y definiendo rutas mediante decoradores, como `@app.get()`, `@app.post()` o `@app.put()`.
+
+Cuando un cliente realiza una petición HTTP, FastAPI identifica la ruta y el método correspondiente, ejecuta la función asociada y convierte su resultado a una respuesta HTTP, normalmente en formato JSON.
+
+En este proyecto, la aplicación se encuentra en `main.py`:
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Hola mundo"}
 ```
 
-Además, cada equipo recibirá:
+La expresión `@app.get("/")` indica que la función `read_root` atenderá peticiones GET realizadas sobre la ruta raíz `/`.
 
-- URL base de la API.
-- Identificador de equipo.
+## Instalación en un entorno virtual
 
-No se suministrará Swagger ni OpenAPI.
+Desde la carpeta del proyecto, cree y active un entorno virtual:
 
-`CONTRATO_API.md` constituye la documentación oficial de integración.
-
-## 1. Análisis de los contratos
-
-Antes de programar, compare:
-
-- Proveedor A.
-- Proveedor B.
-- Contrato institucional.
-
-Construya una tabla que permita identificar correspondencias entre los campos de los proveedores y el contrato institucional, considerando cuando corresponda:
-
-- nombre;
-- tipo;
-- unidad;
-- formato;
-- transformación necesaria.
-
-No se suministra una lista explícita de transformaciones.
-
-## 2. Lectura de datos
-
-El programa debe procesar todos los registros presentes en:
-
-```text
-datos/proveedor_a.json
-datos/proveedor_b.csv
-```
-
-Los archivos originales no pueden ser modificados.
-
-Para este taller, `procesados` corresponde a la cantidad total de registros identificados en ambos datasets.
-
-## 3. Normalización
-
-Cada registro debe transformarse a una representación compatible con el contrato institucional.
-
-Durante este proceso deben resolverse las diferencias de estructura, tipos, unidades y formato que existan entre las fuentes.
-
-Los valores institucionales permitidos para `origen` son:
-
-```text
-proveedor_a
-proveedor_b
-```
-
-La fecha normalizada debe expresarse en formato ISO 8601.
-
-Si un registro contiene un dato que no puede convertirse al tipo o representación exigida por el contrato institucional, se considera un **error de normalización**.
-
-Los registros con error de normalización:
-
-- no deben enviarse a la API;
-- no deben incluirse en `salida/normalizadas.json`;
-- deben quedar identificados en el reporte final.
-
-Un registro correctamente normalizado puede todavía ser inválido según las reglas de negocio.
-
-## 4. Validación local
-
-Todo registro normalizado debe ser validado antes de enviarse.
-
-Un registro que puede representarse correctamente con el contrato institucional, pero incumple una regla del contrato, se clasifica como `rechazado_localmente`.
-
-Estos registros:
-
-- sí deben permanecer en `salida/normalizadas.json`;
-- no deben enviarse a la API;
-- deben quedar identificados en el reporte.
-
-La validación local no reemplaza la validación realizada por el servidor.
-
-## 5. Trazabilidad
-
-Cada registro debe conservar un identificador interno de trazabilidad.
-
-Puede utilizarse el identificador original del proveedor o uno propio derivado de la fuente y la posición del registro.
-
-Este identificador se usa únicamente para evidencias y reporte. No debe enviarse en el body de la API si no pertenece al contrato institucional.
-
-## 6. Evidencia de normalización
-
-El programa debe generar:
-
-```text
-salida/normalizadas.json
-```
-
-Debe contener todos los registros que pudieron ser convertidos al contrato institucional, incluidos aquellos que posteriormente sean rechazados por la validación local.
-
-## 7. Integración HTTP
-
-Las mediciones que superen la validación local deben enviarse a la API institucional.
-
-Los métodos, rutas, headers, parámetros y estructura de los datos están definidos en `CONTRATO_API.md`.
-
-## 8. Manejo de respuestas y reintentos
-
-El cliente debe interpretar el código HTTP y el contenido de la respuesta.
-
-Debe manejar como mínimo:
-
-```text
-201
-400
-409
-422
-5xx
-```
-
-Las respuestas `4xx` no deben reintentarse automáticamente.
-
-Ante errores `5xx`, timeout o pérdida de conexión, se permite:
-
-- 1 intento inicial;
-- hasta 2 reintentos adicionales;
-- máximo 3 intentos por registro.
-
-Después de agotar los intentos, el registro debe quedar identificado como error de comunicación.
-
-El programa no debe finalizar abruptamente ante una respuesta HTTP inesperada.
-
-## 9. Consulta de resultados
-
-Al finalizar los envíos, el cliente debe utilizar la operación de consulta definida en `CONTRATO_API.md` para verificar qué mediciones asociadas al equipo fueron registradas.
-
-## 10. Reporte final
-
-El programa debe generar:
-
-```text
-salida/reporte.json
-```
-
-El reporte debe permitir conocer, como mínimo:
-
-- registros procesados;
-- registros normalizados;
-- errores de normalización;
-- registros válidos localmente;
-- registros rechazados localmente;
-- registros enviados;
-- registros aceptados por la API;
-- registros rechazados por la API;
-- errores de comunicación.
-
-También debe conservar suficiente trazabilidad para identificar cada registro y su resultado.
-
-## 11. Organización del código
-
-El código debe estar organizado en funciones o módulos con responsabilidades claras.
-
-No se exige una arquitectura específica.
-
-Se evaluará negativamente un único bloque extenso de código sin separación de responsabilidades.
-
-## 12. Manejo de errores
-
-El programa debe manejar de forma controlada situaciones como:
-
-- archivo inexistente;
-- JSON no interpretable;
-- fila CSV defectuosa;
-- pérdida de conexión;
-- timeout;
-- respuestas HTTP no exitosas;
-- respuestas no JSON.
-
-No debe mostrarse un traceback no controlado durante la ejecución normal.
-
-## 13. Configuración y ejecución
-
-La URL de la API y el identificador del equipo deben definirse como constantes configurables al inicio de `integrador.py`:
-
-```text
-URL_BASE
-EQUIPO
-```
-
-Comando principal:
+### Windows
 
 ```bash
-python integrador.py
+python -m venv venv
+venv\Scripts\activate
 ```
 
-Las pruebas deberán poder ejecutarse mediante:
+### Linux o macOS
 
 ```bash
-pytest
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-## 14. Pruebas automatizadas
+Después, instale las dependencias:
 
-El proyecto debe incluir al menos 5 pruebas automatizadas independientes de la API real.
+```bash
+pip install -r requirements.txt
+```
 
-Deben cubrir como mínimo:
+El archivo `requirements.txt` incluye FastAPI y Uvicorn. La carpeta `venv/` está incluida en `.gitignore`, por lo que no se subirá al repositorio.
 
-1. una transformación correcta;
-2. una conversión de unidades;
-3. un registro válido;
-4. un registro inválido;
-5. un caso límite seleccionado por el equipo.
+## Desplegar el primer servidor con Uvicorn
 
-No se exige una técnica específica para aislar la API.
+Uvicorn es el servidor ASGI que ejecuta la aplicación FastAPI. Inicie el servidor con:
 
-## 15. Análisis final
+```bash
+uvicorn main:app --reload
+```
 
-Incluya un archivo:
+En este comando, `main` corresponde a `main.py`, `app` a la instancia `app = FastAPI()` y `--reload` reinicia automáticamente el servidor cuando detecta cambios.
+
+El servidor estará disponible en:
 
 ```text
-ANALISIS.md
+http://127.0.0.1:8000
 ```
 
-Extensión máxima aproximada: dos páginas, sin contar tablas o fragmentos de evidencia.
+Para detenerlo, presione `Ctrl + C`.
 
-Debe responder:
+## Ingresar a Swagger UI y ejecutar la primera consulta
 
-1. ¿Qué diferencias encontró entre los contratos de los proveedores?
-2. ¿Qué transformaciones fueron necesarias?
-3. ¿Qué tipos de errores encontró antes de enviar información?
-4. ¿Qué diferencias encontró entre validación local y validación del servidor?
-5. ¿Qué decisión de implementación considera más importante y por qué?
-
-Además, incluya evidencia resumida de una ejecución real del programa.
-
-La evidencia debe mostrar, como mínimo:
-
-- cantidad total de registros procesados;
-- cantidad normalizada;
-- cantidad rechazada localmente;
-- cantidad enviada a la API;
-- cantidad aceptada y rechazada por la API;
-- al menos un caso de error de normalización o validación;
-- al menos una respuesta recibida desde la API;
-- resultado de la consulta final mediante `GET`.
-
-La evidencia puede presentarse como tabla, fragmentos relevantes de la salida del programa o información tomada de los archivos generados en `salida/`.
-
-No es necesario incluir capturas de pantalla ni copiar la salida completa de ejecución.
-
-## Entregables
+FastAPI genera automáticamente una interfaz de documentación interactiva con Swagger UI. Para acceder a ella, abra:
 
 ```text
-proyecto/
-├── integrador.py
-├── requirements.txt
-├── ANALISIS.md
-├── salida/
-│   ├── normalizadas.json
-│   └── reporte.json
-└── tests/
+http://127.0.0.1:8000/docs
 ```
 
-## Restricciones
+Para ejecutar el GET de ejemplo:
 
-No está permitido:
+1. Ubique la operación `GET /`.
+2. Haga clic sobre la operación para expandirla.
+3. Seleccione **Try it out**.
+4. Haga clic en **Execute**.
+5. Revise la respuesta en **Response body**.
 
-- modificar los datasets;
-- modificar respuestas obtenidas de la API;
-- sustituir el programa por envíos manuales;
-- omitir registros problemáticos sin documentar su resultado;
-- alterar el contrato institucional.
+La respuesta esperada es:
 
-Se permite consultar documentación oficial de Python y de las bibliotecas utilizadas.
+```json
+{
+  "message": "Hola mundo"
+}
+```
 
-## Criterios de evaluación
+La consulta también puede realizarse desde el navegador en `http://127.0.0.1:8000/` o mediante `curl`:
 
-| Criterio | Porcentaje |
-|---|---:|
-| Análisis de contratos | 10% |
-| Lectura y normalización | 20% |
-| Validación | 15% |
-| Integración HTTP | 20% |
-| Manejo de errores y reintentos | 10% |
-| Reporte y trazabilidad | 10% |
-| Pruebas automatizadas | 10% |
-| Calidad y claridad del código | 5% |
-| **Total** | **100%** |
+```bash
+curl http://127.0.0.1:8000/
+```
 
-## Tiempo
+La documentación alternativa con ReDoc está disponible en:
 
-Plazo de desarrollo: **4 días**.
+```text
+http://127.0.0.1:8000/redoc
+```
