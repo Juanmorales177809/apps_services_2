@@ -3,11 +3,14 @@
 venv/
 env/
 ENV/
+**/.venv/
+**/venv/
 
 # Python cache and compiled files
 __pycache__/
 *.py[cod]
 *$py.class
+revisar.py
 
 # Distribution and build artifacts
 build/
@@ -46,6 +49,9 @@ htmlcov/
 # IDEs and editors
 .idea/
 .vscode/
+*.code-workspace
+.history/
+.vscode-test/
 *.swp
 *.swo
 *~
