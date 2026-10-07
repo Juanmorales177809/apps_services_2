@@ -38,6 +38,9 @@ htmlcov/
 *.pem
 *.key
 
+# Local review script
+revisar.py
+
 # Logs and local runtime files
 *.log
 *.pid
