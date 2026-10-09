@@ -160,7 +160,7 @@ La práctica corresponde a una actividad de desarrollo de software y no implica 
 
 Se deben tener en cuenta las siguientes consideraciones:
 
-- No incluir credenciales reales en el código fuente.
+- No incluir credenciales reales en el código fuente. 
 - No subir archivos `.env` al repositorio.
 - Utilizar variables de entorno para credenciales y parámetros de conexión.
 - Mantener `.env` dentro del `.gitignore`.
